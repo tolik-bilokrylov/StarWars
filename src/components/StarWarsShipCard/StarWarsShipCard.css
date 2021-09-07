@@ -1,0 +1,22 @@
+.ship-card {
+  justify-content: center;
+  max-width: 350px;
+  height: 100%;
+  text-align: center;
+  border: 2px solid red;
+  grid-auto-rows: 10px;
+  grid-auto-columns: 15px;
+  /* padding: 10px; */
+}
+
+.ship-card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+}
+/* 200px for the mobile, 300px for the tablet and 350px for the large screen */
+/* 2.	All cards should have the red 2px border
+3.	All card should have the space between each other (10px horizontal, 15px vertical)
+4.	All card should have 10px padding */
