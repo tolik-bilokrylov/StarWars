@@ -1,15 +1,15 @@
 import React from 'react';
+// import { PaginationButton } from '../../types';
 
-// export function Buttons({
-//   page, setPage, previous, next,
-// }) {
+// export const Buttons: React.FC<{ props: PaginationButton }> = ({ props }) => {
+//   const { page, setPage, previous, next } = props;
 //   return (
 //     <div className="button-container">
 //       <button
 //         className="button"
 //         type="button"
-//       disabled={previous === null}
-//       onClick={() => setPage(page - 1)}
+//         disabled={previous === null}
+//         onClick={() => setPage(page - 1)}
 //       >
 //         previous
 //       </button>

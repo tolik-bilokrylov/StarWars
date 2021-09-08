@@ -4,22 +4,12 @@ export interface StarWarsShip {
   starship_class: string,
   hyperdrive_rating: string,
   passengers: string,
-  manufacturer: string,
+  manufacturer: string;
 }
 
-export interface ButtonInfo {
-  page: number,
+export interface ResultData {
+  count: number,
   next: string | null,
   previous: string | null,
+  results: StarWarsShip[];
 }
-
-export interface RootStatePosts {
-  posts: any[];
-  postId: number;
-  userId: number;
-};
-
-// export interface RootStatePost {
-//   post: Post | null;
-//   comments: Comment[];
-// }

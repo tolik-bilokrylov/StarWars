@@ -1,75 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Button } from 'reactstrap';
 import axios from 'axios';
 import { urlStarWarsShips } from '../../api/api';
-// import { Buttons } from '../Buttons/Buttons';
 import { StarWarsShipCard } from '../StarWarsShipCard/StarWarsShipCard';
 import { StarWarsShip } from '../../types';
-import { Container, Row, Col } from 'react-bootstrap';
+import { ResultData } from '../../types';
+import './StarWarsShipsList.css';
 
-function StarWarsShipsList() {
-  const [starWarsShips, setStarWarsShips] = useState([]);
-  const [info, setInfo] = useState({});
-  // const [page, setPage] = useState(1);
+const StarWarsShipsList = () => {
+  const [starWarsShips, setStarWarsShips] = useState<StarWarsShip[]>([]);
+  const [fullInfo, setFullInfo] = useState<ResultData>({ count: 36, next: "" || null, previous: "" || null, results: [] });
+  const [page, setPage] = useState<number>(1);
 
-  let pageStarWarsShips = `${urlStarWarsShips}/?page=${1}`;
+  let pageStarWarsShips = `${urlStarWarsShips}/?page=${page}`;
+  console.log(page)
+  const previousPage = useCallback(() => {
+    setPage(page - 1)
+  }, [page]);
+  const nextPage = useCallback(() => {
+    setPage(page + 1)
+  }, [page])
 
   useEffect(() => {
-    axios.get(pageStarWarsShips)
+    axios.get<ResultData>(pageStarWarsShips)
       .then((response) => {
-        const result = (response.data);
-        setInfo(response.data);
+        const result = response.data;
+        setFullInfo(response.data);
         setStarWarsShips(result.results);
       })
   }, [pageStarWarsShips]);
-  console.log(info)
 
   return (
-    <div>
-      {/* <Buttons
-        page={page}
-        setPage={setPage}
-        count={info.count}
-        previous={info.previous}
-      /> */}
-      {/* <div className="button-container">
-        <button
-          className="button"
-          type="button"
-          disabled={info.previous === null}
-          onClick={() => setPage(page - 1)}
-        >
-          previous
-        </button>
-        <button
-          className="button"
-          type="button"
-          disabled={info.next === null}
-          onClick={() => setPage(page + 1)}
-        >
-          next
-        </button>
-      </div> */}
-      <Container>
-        <Row xs={2} md={3} lg={4}>
-          {starWarsShips.map((starWarsShip: StarWarsShip) => (
-            <Col style={{ gap: 10 }}>
-              <StarWarsShipCard
-                key={starWarsShip.name}
-                starWarsShip={starWarsShip}
-              />
-            </Col>
-          ))}
-        </Row>
-      </Container>
+    <div className="wrapper">
       <div
-        className="container"
+        className="container-list"
       >
-        {/* {starWarsShips.map((starWarsShip: StarWarsShip) => (
+        {starWarsShips.map((starWarsShip: StarWarsShip) => (
           <StarWarsShipCard
             key={starWarsShip.name}
             starWarsShip={starWarsShip}
           />
-        ))} */}
+        ))}
+      </div>
+      <div className="btn-field">
+        <Button
+          color="primary"
+          size="lg"
+          type="button"
+          disabled={fullInfo.previous === null}
+          onClick={previousPage}
+        >
+          prev
+        </Button>
+        <Button
+          color="primary"
+          size="lg"
+          type="button"
+          disabled={fullInfo.next === null}
+          onClick={nextPage}
+        >
+          next
+        </Button>
       </div>
     </div>
   )

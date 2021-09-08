@@ -6,7 +6,7 @@ import StarWarsShipsList from './components/StarWarsShipsList/StarWarsShipsList'
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <StarWarsShipsList />
     </div>
   );
