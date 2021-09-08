@@ -52,6 +52,7 @@ const StarWarsShipsList = () => {
         >
           prev
         </Button>
+        <span className="page">{page}</span>
         <Button
           color="primary"
           size="lg"
