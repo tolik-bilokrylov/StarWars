@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import axios from 'axios';
 import { urlStarWarsShips } from '../../api/api';
 import { StarWarsShipCard } from '../StarWarsShipCard/StarWarsShipCard';
@@ -13,13 +13,6 @@ const StarWarsShipsList = () => {
   const [page, setPage] = useState<number>(1);
 
   let pageStarWarsShips = `${urlStarWarsShips}/?page=${page}`;
-  console.log(page)
-  const previousPage = useCallback(() => {
-    setPage(page - 1)
-  }, [page]);
-  const nextPage = useCallback(() => {
-    setPage(page + 1)
-  }, [page])
 
   useEffect(() => {
     axios.get<ResultData>(pageStarWarsShips)
@@ -29,6 +22,13 @@ const StarWarsShipsList = () => {
         setStarWarsShips(result.results);
       })
   }, [pageStarWarsShips]);
+
+  const previousPage = useCallback(() => {
+    setPage(page - 1)
+  }, [page]);
+  const nextPage = useCallback(() => {
+    setPage(page + 1)
+  }, [page])
 
   return (
     <div className="wrapper">
@@ -43,25 +43,20 @@ const StarWarsShipsList = () => {
         ))}
       </div>
       <div className="btn-field">
-        <Button
-          color="primary"
-          size="lg"
-          type="button"
-          disabled={fullInfo.previous === null}
-          onClick={previousPage}
-        >
-          prev
-        </Button>
-        <span className="page">{page}</span>
-        <Button
-          color="primary"
-          size="lg"
-          type="button"
-          disabled={fullInfo.next === null}
-          onClick={nextPage}
-        >
-          next
-        </Button>
+        <Pagination size="lg" aria-label="Page navigation example">
+          <PaginationItem
+            disabled={fullInfo.previous === null}
+            onClick={previousPage}
+          >
+            <PaginationLink previous />
+          </PaginationItem>
+          <PaginationItem
+            disabled={fullInfo.next === null}
+            onClick={nextPage}
+          >
+            <PaginationLink next />
+          </PaginationItem>
+        </Pagination>
       </div>
     </div>
   )
